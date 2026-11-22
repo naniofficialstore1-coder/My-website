@@ -1,47 +1,137 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Nani Official Store</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NaNiOfficialStore - MLBB Top Up</title>
 <style>
-body{font-family:Arial;text-align:center;margin:0;background:#fff5f8}
-header{background:#ff2e63;color:white;padding:30px 15px}
-h1{margin:0;font-size:32px}
-.btn{display:inline-block;background:#25D366;color:white;padding:15px 25px;border-radius:30px;text-decoration:none;font-weight:bold;margin:10px}
-.card{background:white;margin:15px;padding:15px;border-radius:15px;box-shadow:0 2px 10px #ddd}
-img{width:100%;border-radius:10px}
-.price{color:#ff2e63;font-size:22px;font-weight:bold}
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
+body{background:#0b1220;color:#fff;padding-bottom:90px}
+.topbar{background:#0f172a;padding:12px 15px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:99}
+.topbar b{font-size:19px}
+.topbar b span{color:#facc15}
+.topbar a{background:#25D366;color:#fff;padding:7px 12px;border-radius:20px;text-decoration:none;font-size:13px;font-weight:bold}
+.banner{margin:12px;border-radius:14px;overflow:hidden;position:relative;height:200px}
+.banner img{width:100%;height:100%;object-fit:cover;display:block}
+.banner .overlay{position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent,rgba(0,0,0,.85));padding:40px 15px 14px}
+.banner h2{font-size:21px}
+.banner p{font-size:12px;opacity:.9}
+.tabs{display:flex;gap:8px;padding:0 12px}
+.tbtn{flex:1;padding:12px;border-radius:12px;border:2px solid #1e293b;background:#131c2e;color:#fff;font-weight:bold;cursor:pointer;font-size:12px}
+.tbtn.active{border-color:#facc15;background:#1e293b;color:#facc15}
+.card{background:#131c2e;margin:12px;border-radius:14px;padding:16px}
+.card h3{color:#facc15;font-size:16px;margin-bottom:4px}
+.card p{font-size:12px;color:#94a3b8;margin-bottom:10px}
+input{width:100%;padding:13px;border-radius:10px;border:1px solid #334155;background:#0b1220;color:#fff;margin-bottom:10px;font-size:15px;outline:none}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.pack{border:2px solid #1e293b;background:#0b1220;border-radius:12px;padding:12px;cursor:pointer}
+.pack.active{border-color:#facc15;background:#1e293b}
+.pack b{font-size:14px}
+.pack span{font-size:12px;color:#94a3b8;display:block;margin-top:2px}
+.pack .price{color:#facc15;font-weight:bold;margin-top:6px;font-size:15px}
+.pay{border:2px solid #1e293b;background:#0b1220;border-radius:12px;padding:12px;display:flex;align-items:center;gap:12px;cursor:pointer;margin-bottom:10px}
+.pay.active{border-color:#22c55e;background:#12281a}
+.pay .logo{width:58px;height:44px;border-radius:10px;background:#fff;display:flex;align-items:center;justify-content:center;flex-shrink:0;overflow:hidden;padding:4px}
+.pay .logo img{width:100%;height:100%;object-fit:contain}
+.pay b{font-size:15px}
+.pay span{font-size:12px;color:#94a3b8;display:block}
+.pay .right{margin-left:auto;text-align:right;font-weight:bold;color:#facc15}
+.buy{position:fixed;bottom:0;left:0;right:0;background:#0f172a;padding:12px;border-top:1px solid #1e293b;display:flex;gap:10px;align-items:center;z-index:99}
+.buy .total{flex:1}
+.buy .total small{color:#94a3b8}
+.buy .total b{color:#facc15;font-size:18px;display:block}
+.buy button{background:#22c55e;color:#fff;border:none;padding:14px 22px;border-radius:12px;font-weight:bold;font-size:16px;cursor:pointer}
+.group{display:block;text-align:center;background:#25D366;color:#fff;padding:12px;border-radius:12px;text-decoration:none;font-weight:bold;margin:12px}
+.note{font-size:11px;color:#94a3b8;text-align:center;padding:0 15px}
+.pay-logos{display:flex;justify-content:center;gap:8px;margin:10px 0;flex-wrap:wrap}
+.pay-logos img{height:28px;background:#fff;padding:4px 8px;border-radius:20px;object-fit:contain}
+.upi-box{background:#0b1220;padding:12px;border-radius:10px;display:flex;justify-content:space-between;align-items:center;border:1px dashed #22c55e;margin:10px 0}
+.upi-box b{font-size:16px;letter-spacing:.5px}
+.upi-box button{background:#22c55e;border:none;color:#fff;padding:8px 14px;border-radius:8px;font-weight:bold;cursor:pointer}
+.qr-img{width:210px;height:210px;border-radius:12px;background:#fff;padding:8px;margin:10px auto;display:block;object-fit:contain}
+.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:999;align-items:flex-end;justify-content:center}
+.modal.open{display:flex}
+.modal-box{background:#131c2e;width:100%;max-width:480px;border-radius:20px 20px 0 0;padding:20px;max-height:92vh;overflow:auto;text-align:center}
+.modal-box button{cursor:pointer}
+.close-btn{background:#334155;color:#fff;border:none;padding:8px 14px;border-radius:20px;float:right}
 </style>
+<meta name="google-site-verification" content="Dq1U7sytQTeHLobYUoLnMIMdQtqXgvT_5QSO2m7pG5c" />
 </head>
 <body>
-<header>
-<h1>Nani Official Store ✨</h1>
-<p>Best Fashion & Beauty Products in Mizoram</p>
-<a class="btn" href="https://wa.me/919000000000">Order on WhatsApp</a>
-</header>
-
-<div class="card">
-<h2>🔥 Best Seller - Lipstick Set</h2>
-<p>Long lasting, waterproof, 6 colors</p>
-<p class="price">₹499 Only</p>
-<a class="btn" href="https://wa.me/919000000000?text=Hi, I want Lipstick Set">Order Now</a>
+<div class="topbar"><b>NaNi<span>OfficialStore</span></b><a href="https://chat.whatsapp.com/Jf3qFG7JVkLETdm1qH7qtq">Join Group</a></div>
+<div class="banner"><img src="https://pics-gamma-indol.vercel.app/pic.jpg" alt="Hirara"><div class="overlay"><h2>🔥 MOBILE LEGENDS TOP UP</h2><p>Instant Delivery • 100% Trusted • NaNiOfficialStore</p></div></div>
+<div class="tabs"><button class="tbtn active" onclick="setTab('Normal Packs',this)">💎 NORMAL PACKS</button><button class="tbtn" onclick="setTab('Weekly Pass',this)">🎫 WEEKLY PASS</button><button class="tbtn" onclick="setTab('Double Diamonds',this)">✨ DOUBLE DIAMONDS</button></div>
+<div class="card"><h3>1. ENTER YOUR ID & SERVER</h3><p>Kindly provide the correct User ID and Server in top-up.</p><input id="uid" placeholder="Enter User ID"><input id="server" placeholder="Enter Server ID"></div>
+<div class="card"><h3>2. SELECT PACKAGE</h3><p id="tabLabel">Normal Packs - Select your diamond pack</p><div class="grid" id="packs"></div></div>
+<div class="card"><h3>3. SELECT PAYMENT METHOD</h3><p>Select one - GPay / PhonePe / Paytm / UPI</p>
+<div class="pay active" onclick="setPay('GPay',this)"><div class="logo"><img src="https://cdn.shopify.com/s/files/1/0994/8332/0616/files/Gpay.png?v=1789036989" alt="GPay"></div><div><b>Google Pay (GPay)</b><span>UPI Payment • Instant</span></div><div class="right" id="payPrice1">₹0</div></div>
+<div class="pay" onclick="setPay('PhonePe',this)"><div class="logo"><img src="https://images.seeklogo.com/logo-png/42/1/phonepe-logo-png_seeklogo-427388.png" alt="PhonePe"></div><div><b>PhonePe</b><span>UPI Payment • Instant</span></div><div class="right" id="payPrice2">₹0</div></div>
+<div class="pay" onclick="setPay('Paytm',this)"><div class="logo"><img src="https://images.seeklogo.com/logo-png/30/1/paytm-logo-png_seeklogo-305549.png" alt="Paytm"></div><div><b>Paytm</b><span>UPI / Wallet • Instant</span></div><div class="right" id="payPrice3">₹0</div></div>
+<div class="pay" onclick="setPay('UPI / WhatsApp Pay',this)"><div class="logo"><img src="https://cdn.shopify.com/s/files/1/0814/9883/3119/files/images.png?v=1783668435" alt="UPI"></div><div><b>UPI / WhatsApp Pay</b><span>Any UPI App</span></div><div class="right" id="payPrice4">₹0</div></div>
 </div>
 
-<div class="card">
-<h2>💄 Makeup Combo</h2>
-<p>Full combo for daily use</p>
-<p class="price">₹999 Only</p>
-<a class="btn" href="https://wa.me/919000000000?text=Hi, I want Makeup Combo">Order Now</a>
+<div class="card" style="text-align:center;border:2px solid #22c55e;">
+<h3 style="color:#fff;font-size:18px;">💳 PAY WITH ANY UPI APP</h3>
+<p>GPay • PhonePe • Paytm • BHIM • Any Bank App</p>
+<div class="pay-logos">
+<img src="https://cdn.shopify.com/s/files/1/0994/8332/0616/files/Gpay.png?v=1789036989" alt="GPay">
+<img src="https://images.seeklogo.com/logo-png/42/1/phonepe-logo-png_seeklogo-427388.png" alt="PhonePe">
+<img src="https://images.seeklogo.com/logo-png/30/1/paytm-logo-png_seeklogo-305549.png" alt="Paytm">
+<img src="https://cdn.shopify.com/s/files/1/0814/9883/3119/files/images.png?v=1783668435" alt="UPI">
+</div>
+<img src="https://i.postimg.cc/C1skd7ML/qr.jpg" class="qr-img" alt="Scan to Pay - NaNiOfficialStore">
+<p style="margin:5px 0;color:#fff;">Scan QR with any UPI app</p>
+<p style="font-size:13px;">OR Pay to UPI ID:</p>
+<div class="upi-box"><b id="upiId">dagosh16@oksbi</b><button onclick="copyUpi()">Copy</button></div>
+<p style="font-size:13px;color:#fbbf24;">⚠️ Diamonds will be delivered ONLY after payment is verified in our account. Screenshot is NOT proof.</p>
+<p style="font-size:13px;color:#94a3b8;">1. Pay via QR / UPI ID<br>2. Send payment screenshot + UTR on WhatsApp<br>3. Get your Diamonds in 5-15 mins</p>
 </div>
 
-<div class="card">
-<h2>👗 Fashion Dress</h2>
-<p>Trendy & Comfortable</p>
-<p class="price">₹799 Only</p>
-<a class="btn" href="https://wa.me/919000000000?text=Hi, I want Fashion Dress">Order Now</a>
-</div>
+<a class="group" href="https://chat.whatsapp.com/Jf3qFG7JVkLETdm1qH7qtq">💬 Join Our WhatsApp Group</a>
+<p class="note">After payment, send screenshot on WhatsApp. Order will be delivered in 5-15 mins.</p>
+<div class="buy"><div class="total"><small>Total</small><b id="total">₹0</b><small id="selPack">Select a pack</small></div><button onclick="buyNow()">BUY NOW →</button></div>
 
-<p>📍 Serkawn, Mizoram | Delivery All India</p>
-<p>Follow us on Instagram: @naniofficialstore1</p>
+<div class="modal" id="payModal"><div class="modal-box">
+<button class="close-btn" onclick="closeModal()">✕ Close</button>
+<h2 style="margin-top:30px;">Pay <span id="modalPrice" style="color:#facc15;">₹0</span></h2>
+<p style="font-size:13px;color:#94a3b8;margin:8px 0;" id="modalInfo">Pack Info</p>
+<div class="pay-logos">
+<img src="https://cdn.shopify.com/s/files/1/0994/8332/0616/files/Gpay.png?v=1789036989">
+<img src="https://images.seeklogo.com/logo-png/42/1/phonepe-logo-png_seeklogo-427388.png">
+<img src="https://images.seeklogo.com/logo-png/30/1/paytm-logo-png_seeklogo-305549.png">
+<img src="https://cdn.shopify.com/s/files/1/0814/9883/3119/files/images.png?v=1783668435">
+</div>
+<img src="https://i.postimg.cc/C1skd7ML/qr.jpg" class="qr-img" alt="Scan to Pay">
+<p style="font-size:13px;">Scan with <b id="modalPay">GPay</b> or any UPI app</p>
+<div class="upi-box"><b>dagosh16@oksbi</b><button onclick="copyUpi()">Copy</button></div>
+<p style="font-size:12px;color:#fbbf24;">⚠️ Pay exact amount. Diamonds only after payment verified in our account.</p>
+<a id="waLink" href="#" target="_blank" style="display:block;background:#25D366;color:#fff;padding:14px;border-radius:12px;text-decoration:none;font-weight:bold;margin-top:12px;">I Have Paid - Send Screenshot on WhatsApp ✅</a>
+<p style="font-size:11px;color:#94a3b8;margin-top:8px;">Click above after payment, send screenshot + UTR number</p>
+</div></div>
+
+<script>
+let tab='Normal Packs';let selectedName='',selectedPrice='',payMethod='GPay';
+const data={'Normal Packs':[['50+5 Diamonds','55 💎','₹75'],['78+8 Diamonds','86 💎','₹120'],['100+10 Diamonds','110 💎','₹150'],['141 Diamonds','141 💎','₹195'],['165 Diamonds','165 💎','₹225'],['172 Diamonds','172 💎','₹234'],['220 Diamonds','220 💎','₹300'],['257 Diamonds','257 💎','₹340'],['275 Diamonds','275 💎','₹360'],['312 Diamonds','312 💎','₹420'],['343 Diamonds','343 💎','₹460'],['429 Diamonds','429 💎','₹680'],['514 Diamonds','514 💎','₹690'],['565 Diamonds','565 💎','₹750'],['600 Diamonds','600 💎','₹810'],['706 Diamonds','706 💎','₹935'],['761 Diamonds','761 💎','₹1010'],['878 Diamonds','878 💎','₹1,170'],['963 Diamonds','963 💎','₹1,290'],['1049 Diamonds','1049 💎','₹1,400'],['1130 Diamonds','1130 💎','₹1,500'],['1220 Diamonds','1220 💎','₹1,630'],['1412 Diamonds','1412 💎','₹1,880'],['2195 Diamonds','2195 💎','₹2,830'],['3688 Diamonds','3688 💎','₹4,730'],['5532 Diamonds','5532 💎','₹7,120']],'Weekly Pass':[['Weekly Elite Bundle','Weekly Elite','₹75'],['Monthly Elite Bundle','Monthly Elite','₹380'],['Weekly Pass x1','Weekly Pass x1','₹145'],['Weekly Pass x2','Weekly Pass x2','₹290'],['Weekly Pass x3','Weekly Pass x3','₹435'],['Weekly Pass x4','Weekly Pass x4','₹580'],['Twilight Pass','Twilight Pass','₹780']],'Double Diamonds':[['100 Diamonds (50+50)','100 💎 Double','₹76'],['300 Diamonds (150+150)','300 💎 Double','₹230'],['525 Diamonds (250+250)','525 💎 Double','₹375'],['1065 Diamonds (500+500)','1065 💎 Double','₹755']]};
+function render(){let html='';data[tab].forEach(p=>{html+=`<div class="pack" onclick="selectPack('${p[0]}','${p[2]}',this)"><b>${p[0]}</b><span>${p[1]}</span><div class="price">${p[2]}</div></div>`});document.getElementById('packs').innerHTML=html;selectedName='';selectedPrice='';document.getElementById('total').innerText='₹0';document.getElementById('selPack').innerText='Select a pack';document.getElementById('tabLabel').innerText=tab+' - Select your pack';updatePay()}
+function setTab(t,el){tab=t;document.querySelectorAll('.tbtn').forEach(b=>b.classList.remove('active'));el.classList.add('active');render()}
+function selectPack(n,p,el){document.querySelectorAll('.pack').forEach(x=>x.classList.remove('active'));el.classList.add('active');selectedName=n;selectedPrice=p;document.getElementById('total').innerText=p;document.getElementById('selPack').innerText=tab+' - '+n;updatePay()}
+function updatePay(){['payPrice1','payPrice2','payPrice3','payPrice4'].forEach(id=>{document.getElementById(id).innerText=selectedPrice?selectedPrice:'₹0'})}
+function setPay(m,el){payMethod=m;document.querySelectorAll('.pay').forEach(p=>p.classList.remove('active'));el.classList.add('active')}
+function copyUpi(){navigator.clipboard.writeText('dagosh16@oksbi');alert('UPI ID Copied: dagosh16@oksbi')}
+function closeModal(){document.getElementById('payModal').classList.remove('open')}
+function buyNow(){
+let uid=document.getElementById('uid').value.trim();
+let server=document.getElementById('server').value.trim();
+if(!uid){alert('Please Enter Your User ID');return}
+if(!selectedName){alert('Please Select a Pack');return}
+document.getElementById('modalPrice').innerText=selectedPrice;
+document.getElementById('modalInfo').innerText=tab+' - '+selectedName+' | ID: '+uid+' | Server: '+(server||'-');
+document.getElementById('modalPay').innerText=payMethod;
+let msg=`Hello NaNiOfficialStore! I have PAID%0A%0A🎮 Game: Mobile Legends%0A📦 Category: ${tab}%0A🆔 User ID: ${uid}%0A🖥️ Server ID: ${server||' - '}%0A📦 Pack: ${selectedName}%0A💰 Price: ${selectedPrice}%0A💳 Payment: ${payMethod} to dagosh16@oksbi%0A%0AI have paid, here is my screenshot + UTR. Please confirm my order.`;
+document.getElementById('waLink').href=`https://wa.me/919233859157?text=${msg}`;
+document.getElementById('payModal').classList.add('open');
+}
+render();
+</script>
 </body>
 </html>
+
+
+This is my website isn't?
